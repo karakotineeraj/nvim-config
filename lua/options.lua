@@ -11,3 +11,9 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.scrolloff = 8
+
+vim.opt.shellcmdflag = '-c'
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+
