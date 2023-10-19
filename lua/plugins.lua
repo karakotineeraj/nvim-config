@@ -1,44 +1,61 @@
-return require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
-	use 'williamboman/mason.nvim'
-        use 'williamboman/mason-lspconfig.nvim'
-        use 'neovim/nvim-lspconfig'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
 
-	use 'hrsh7th/nvim-cmp'
-	use 'hrsh7th/cmp-nvim-lsp'
-	use 'hrsh7th/cmp-nvim-lua'
-	use 'hrsh7th/cmp-nvim-lsp-signature-help'
-	use 'hrsh7th/cmp-vsnip'
-	use 'hrsh7th/cmp-path'
-	use 'hrsh7th/cmp-buffer'
-	use 'hrsh7th/vim-vsnip'
+vim.opt.rtp:prepend(lazypath)
 
-	use {
-		'nvim-tree/nvim-tree.lua',
-		requires = {
-			'nvim-tree/nvim-web-devicons',
-		},
-	}
+require('lazy').setup({
+	'wbthomason/packer.nvim',
+	'williamboman/mason.nvim',
+	'williamboman/mason-lspconfig.nvim',
+	'neovim/nvim-lspconfig',
 
-	use 'folke/tokyonight.nvim'
-	use 'navarasu/onedark.nvim'
-	use 'morhetz/gruvbox'
-	use {
+	'hrsh7th/nvim-cmp',
+	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-nvim-lua',
+	'hrsh7th/cmp-nvim-lsp-signature-help',
+	'hrsh7th/cmp-vsnip',
+	'hrsh7th/cmp-path',
+	'hrsh7th/cmp-buffer',
+	'hrsh7th/vim-vsnip',
+
+	{ 'kyazdani42/nvim-web-devicons', lazy = true },
+
+	'nvim-tree/nvim-tree.lua',
+
+	'folke/tokyonight.nvim',
+	{
+		'navarasu/onedark.nvim',
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		config = function()
+			-- load the colorscheme here
+			vim.cmd([[colorscheme tokyonight]])
+		end,
+	},
+	'morhetz/gruvbox',
+
+	{
 		'nvim-treesitter/nvim-treesitter',
-		run = function()
+		build = function()
 			local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
 			ts_update()
 		end,
-	}
+	},
 
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.0',
-		requires = { 'nvim-lua/plenary.nvim' }
-	}
+	{
+		'nvim-telescope/telescope.nvim', version = '0.1.0',
+		dependencies = { 'nvim-lua/plenary.nvim' }
+	},
 
-	use {
-		'nvim-lualine/lualine.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-	}
-end)
+	'nvim-lualine/lualine.nvim',
+})
 
