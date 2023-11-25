@@ -31,17 +31,16 @@ require('lazy').setup({
 
 	'nvim-tree/nvim-tree.lua',
 
-	'folke/tokyonight.nvim',
 	{
-		'navarasu/onedark.nvim',
+		'rose-pine/neovim',
+		name = 'rose-pine',
 		lazy = false, -- make sure we load this during startup if it is your main colorscheme
 		priority = 1000, -- make sure to load this before all the other start plugins
 		config = function()
 			-- load the colorscheme here
-			vim.cmd([[colorscheme tokyonight]])
+			vim.cmd([[colorscheme rose-pine]])
 		end,
 	},
-	'morhetz/gruvbox',
 
 	{
 		'nvim-treesitter/nvim-treesitter',
@@ -49,6 +48,11 @@ require('lazy').setup({
 			local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
 			ts_update()
 		end,
+	},
+
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		dependencies = { 'nvim-treesitter/nvim-treesitter' },
 	},
 
 	{
