@@ -13,9 +13,5 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.scrolloff = 8
 
-vim.opt.shellcmdflag = '-c'
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-
 vim.opt.swapfile = false
 
